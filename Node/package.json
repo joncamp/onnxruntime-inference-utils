@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "node index.js --model=\"..\\Models\\model.onnx\" --iterations=10 --inputs=\"a:3,4;b:4,3\""
+  },
+
+  "dependencies": {
+    "onnxruntime-node": "^1.20.1",
+    "yargs": "^17.7.2"
+  }  
+}
