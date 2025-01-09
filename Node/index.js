@@ -36,6 +36,11 @@ async function main() {
       description: 'Input names and dimensions in the format <input-name:dim1,dim2,...;...>',
       demandOption: true
     })
+    .option('useQnn', {
+      alias: 'qnn',
+      type: 'boolean',
+      description: 'Use QNN operator set for quantized models'
+    })
     .help()
     .argv;
 
@@ -60,7 +65,20 @@ async function main() {
 
   try {
     console.log(`Loading model from: ${modelPath}`);
-    const session = await ort.InferenceSession.create(modelPath);
+
+    let inferenceSessionOptions = {}
+    if (argv.useQnn) {
+      console.log('Using QNN operator set for quantized models');
+      inferenceSessionOptions = {
+            logSeverityLevel: 0,
+            executionProviders: [{ 
+                name: 'qnn',
+                // backend_path: 'QnnHtp.dll' 
+            }]
+        }
+    }
+
+    const session = await ort.InferenceSession.create(modelPath, inferenceSessionOptions);
 
     console.log('User-specified input information:');
     inputs.forEach((input, idx) => {
