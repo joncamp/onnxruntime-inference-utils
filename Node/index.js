@@ -73,7 +73,8 @@ async function main() {
             logSeverityLevel: 0,
             executionProviders: [{ 
                 name: 'qnn',
-                // backend_path: 'QnnHtp.dll' 
+                // profilingLevel: "detailed",
+                backendPath: 'QnnHtp.dll' 
             }]
         }
     }
